@@ -1,0 +1,566 @@
+{
+ "comment": "Hand-derived labels. 11.0.0.1 and 11.0.0.2 are stand-in public addresses: nothing is ever contacted.",
+ "scenarios": [
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p01_rebind_imds",
+   "kind": "pos",
+   "note": "[public, link-local metadata]",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "169.254.169.254"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p02_rebind_loopback",
+   "kind": "pos",
+   "note": "[public, loopback]",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "127.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p03_rebind_mapped_rfc1918",
+   "kind": "pos",
+   "note": "[public, IPv4-mapped 10/8]",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "::ffff:10.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p04_rebind_rfc1918",
+   "kind": "pos",
+   "note": "",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "10.0.0.5"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p05_rebind_ipv6_loopback",
+   "kind": "pos",
+   "note": "",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "::1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p06_rebind_mapped_imds",
+   "kind": "pos",
+   "note": "",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "::ffff:169.254.169.254"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p07_redirect_imds",
+   "kind": "pos",
+   "note": "GHSA 302 variant; hop 2 is an IP literal",
+   "redirects": {
+    "https://redir.example/x": "http://169.254.169.254/latest/meta-data/"
+   },
+   "resolver": {
+    "redir.example": [
+     [
+      "11.0.0.2"
+     ]
+    ]
+   },
+   "url": "https://redir.example/x"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "p08_redirect_loopback_name",
+   "kind": "pos",
+   "note": "",
+   "redirects": {
+    "https://redir.example/x": "http://internal.example:6379/"
+   },
+   "resolver": {
+    "internal.example": [
+     [
+      "127.0.0.1"
+     ]
+    ],
+    "redir.example": [
+     [
+      "11.0.0.2"
+     ]
+    ]
+   },
+   "url": "https://redir.example/x"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "DELIVERED",
+   "id": "n01_always_public",
+   "kind": "neg",
+   "note": "",
+   "redirects": {},
+   "resolver": {
+    "ok.example": [
+     [
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://ok.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "REJECT_VALIDATION",
+   "hand_pre": "REJECT_VALIDATION",
+   "id": "n02_private_from_start",
+   "kind": "neg",
+   "note": "",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "127.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "REJECT_SCHEME",
+   "hand_pre": "REJECT_SCHEME",
+   "id": "n03_http_scheme",
+   "kind": "neg",
+   "note": "GHSA step 0",
+   "redirects": {},
+   "resolver": {},
+   "url": "http://127.0.0.1:6379/"
+  },
+  {
+   "allow_private": true,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "ALLOWED_BY_ENV",
+   "hand_pre": "ALLOWED_BY_ENV",
+   "id": "n04_allow_private_env",
+   "kind": "neg",
+   "note": "MLFLOW_WEBHOOK_ALLOW_PRIVATE_IPS, diff 83-84; validation skips resolution, so the first answer is what is connected",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "169.254.169.254"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "DELIVERED",
+   "id": "n05_redirect_public",
+   "kind": "neg",
+   "note": "",
+   "redirects": {
+    "https://redir.example/x": "https://ok.example/y"
+   },
+   "resolver": {
+    "ok.example": [
+     [
+      "11.0.0.1"
+     ]
+    ],
+    "redir.example": [
+     [
+      "11.0.0.2"
+     ]
+    ]
+   },
+   "url": "https://redir.example/x"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": true,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "DELIVERED",
+   "id": "a01_getpeername_oserror",
+   "kind": "adv",
+   "note": "diff 88-94, test 317-323",
+   "redirects": {},
+   "resolver": {
+    "ok.example": [
+     [
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://ok.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": "127.0.0.1",
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "a02_explicit_proxy_loopback",
+   "kind": "adv",
+   "note": "diff 175-186, test 300-314",
+   "redirects": {},
+   "resolver": {
+    "ok.example": [
+     [
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://ok.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": "127.0.0.1",
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "a03_env_proxy_loopback",
+   "kind": "adv",
+   "note": "trust_env=False, diff 31-33",
+   "redirects": {},
+   "resolver": {
+    "ok.example": [
+     [
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://ok.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "REJECT_VALIDATION",
+   "hand_pre": "REJECT_VALIDATION",
+   "id": "a04_validation_mixed_answer",
+   "kind": "adv",
+   "note": "every address must be public",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1",
+      "10.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "a05_connect_private_first",
+   "kind": "adv",
+   "note": "model connects to the first address",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "127.0.0.1",
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "DELIVERED",
+   "id": "a06_connect_public_first",
+   "kind": "adv",
+   "note": "model connects to the first address",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "11.0.0.1",
+      "127.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "DELIVERED",
+   "id": "a07_nat64_imds_beyond_diff",
+   "kind": "adv",
+   "note": "NAT64 of 169.254.169.254; is_global is True; GHSA follow-up PR 25568",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "64:ff9b::a9fe:a9fe"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "a08_6to4_imds",
+   "kind": "adv",
+   "note": "6to4 2002::/16 is not global on Python 3.10-3.13",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "2002:a9fe:a9fe::1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "SSRF_ERROR",
+   "hand_pre": "REACHED_PRIVATE",
+   "id": "a09_mapped_cgnat",
+   "kind": "adv",
+   "note": "GHSA says this could pass; not reproduced on Python 3.10-3.13",
+   "redirects": {},
+   "resolver": {
+    "evil.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "::ffff:100.64.0.1"
+     ]
+    ]
+   },
+   "url": "https://evil.example/hook"
+  },
+  {
+   "allow_private": true,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "ALLOWED_BY_ENV",
+   "hand_pre": "ALLOWED_BY_ENV",
+   "id": "a10_allow_private_redirect",
+   "kind": "adv",
+   "note": "",
+   "redirects": {
+    "https://redir.example/x": "http://169.254.169.254/"
+   },
+   "resolver": {
+    "redir.example": [
+     [
+      "11.0.0.2"
+     ]
+    ]
+   },
+   "url": "https://redir.example/x"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "DELIVERED",
+   "hand_pre": "DELIVERED",
+   "id": "a11_rebind_on_second_hop",
+   "kind": "adv",
+   "note": "the hop is resolved once, never validated: first answer is public",
+   "redirects": {
+    "https://redir.example/x": "https://hop.example/y"
+   },
+   "resolver": {
+    "hop.example": [
+     [
+      "11.0.0.1"
+     ],
+     [
+      "169.254.169.254"
+     ]
+    ],
+    "redir.example": [
+     [
+      "11.0.0.2"
+     ]
+    ]
+   },
+   "url": "https://redir.example/x"
+  },
+  {
+   "allow_private": false,
+   "env_proxy": null,
+   "explicit_proxy": null,
+   "getpeername_fails": false,
+   "hand_post": "TOO_MANY_HOPS",
+   "hand_pre": "TOO_MANY_HOPS",
+   "id": "a12_redirect_loop",
+   "kind": "adv",
+   "note": "model bound MAX_HOPS=10",
+   "redirects": {
+    "https://loop.example/a": "https://loop.example/b",
+    "https://loop.example/b": "https://loop.example/a"
+   },
+   "resolver": {
+    "loop.example": [
+     [
+      "11.0.0.1"
+     ]
+    ]
+   },
+   "url": "https://loop.example/a"
+  }
+ ]
+}
